@@ -1002,13 +1002,13 @@ struct clusterState;
 #define CHILD_INFO_TYPE_RDB 0
 #define CHILD_INFO_TYPE_AOF 1
 
-struct redisServer {
+struct redisServer {            /* 服务器端结构 */
     /* General */
-    pid_t pid;                  /* Main process pid. */
-    char *configfile;           /* Absolute config file path, or NULL */
-    char *executable;           /* Absolute executable file path. */
-    char **exec_argv;           /* Executable argv vector (copy). */
-    int dynamic_hz;             /* Change hz value depending on # of clients. */
+    pid_t pid;                  /* Main process pid. 主进程号*/
+    char *configfile;           /* Absolute config file path, or NULL 配置文件地址*/
+    char *executable;           /* Absolute executable file path. 可执行文件地址*/
+    char **exec_argv;           /* Executable argv vector (copy). 执行参数向量*/
+    int dynamic_hz;             /* Change hz value depending on # of clients. 改变客户端依赖hz值*/
     int config_hz;              /* Configured HZ value. May be different than
                                    the actual 'hz' field value if dynamic-hz
                                    is enabled. */
@@ -1017,7 +1017,7 @@ struct redisServer {
     dict *commands;             /* Command table */
     dict *orig_commands;        /* Command table before command renaming. */
     aeEventLoop *el;
-    unsigned int lruclock;      /* Clock for LRU eviction */
+    unsigned int lruclock;      /* Clock for LRU eviction 服务器LRU时钟*/
     int shutdown_asap;          /* SHUTDOWN needed ASAP */
     int activerehashing;        /* Incremental rehash in serverCron() */
     int active_defrag_running;  /* Active defragmentation running (holds current scan aggressiveness) */
@@ -1294,10 +1294,10 @@ struct redisServer {
     int list_max_ziplist_size;
     int list_compress_depth;
     /* time cache */
-    time_t unixtime;    /* Unix time sampled every cron cycle. */
+    time_t unixtime;    /* Unix time sampled every cron cycle. 保存秒级精度系统时间戳*/
     time_t timezone;    /* Cached timezone. As set by tzset(). */
     int daylight_active;    /* Currently in daylight saving time. */
-    long long mstime;   /* Like 'unixtime' but with milliseconds resolution. */
+    long long mstime;   /* Like 'unixtime' but with milliseconds resolution. 保存了毫秒级的系统时间戳*/
     /* Pubsub */
     dict *pubsub_channels;  /* Map channels to list of subscribed clients */
     list *pubsub_patterns;  /* A list of pubsub_patterns */
